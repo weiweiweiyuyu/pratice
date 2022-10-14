@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快排</title>
+</head>
+
+<body>
+    <script>
+        function get_mid(arr, left, right) {
+            let pivot = arr[left];
+            while (left < right) {
+                //从右边开始比较
+                //能不能细心一点，right是下标就直接去比较了？？？ arr[right]
+                while (arr[right] >= pivot && left < right) {
+                    right--;
+                }
+                arr[left] = arr[right];
+                while (arr[left] <= pivot && left < right) {
+                    left++;
+                }
+                arr[right] = arr[left]
+            }
+            arr[left] = pivot;
+            return left;
+        }
+        function quickSort(arr, left, right) {
+            //还有这个判断 if条件判断，如果left小于right再进来递归否则就不做操作
+            if (left < right) {
+                let mid = get_mid(arr, left, right);
+                quickSort(arr, left, mid - 1);
+                quickSort(arr, mid + 1, right);
+            }
+        }
+        let arr = [3, 2, 9, 1, 2, 5, 6, 3, 8, 33]
+        quickSort(arr, 0, arr.length - 1)
+        console.log(arr)
+    </script>
+</body>
+
+</html>

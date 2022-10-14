@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hang-style{
+            width: 100px;
+            height: 200px;
+            margin: 12px 20px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        块级元素：<div>、<p>、<h1>~<h6>、<ul>、<form>、<table>...
+        行级元素：<span>、<a>、<input>、<img>、<br>、<b>、<i>、<em>...
+        行内块：<img>、<input>
+        行内元素：
+            设置宽高无效
+            只能设置水平方向的margin 和 padding ，不能设置垂直方向的padding和margin
+            不会自动换行
+            可以容纳其他行内元素或者文本
+        块级元素：
+            可以设置宽高
+            可以设置任意方向的margin和padding
+            可以自动换行
+            多个块级元素，默认排列从上到下
+            可以容纳行内元素和其他块元素
+        行内块元素：
+            和相邻行内元素在同一行，但是之间会有空白缝隙
+            可以设置元素宽高，margin和padding 
+        转换：
+        块级元素—>行内元素：display:inline;
+        行内元素—>块级元素：display:block;
+        块、行内元素—>行内块：display:inline-block;
+     -->
+    <span>
+        <span class="hang-style">哈哈哈</span>
+        <span>啦啦</span>
+        <img class="hang-style" />
+        <img />
+    </span>
+</body>
+</html>

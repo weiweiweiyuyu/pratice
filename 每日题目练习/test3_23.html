@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>em,rem,px的区别学习😄</title>
+    <style>
+        .big {
+            font-size: 10px;
+        }
+
+        .small {
+            font-size: 20px;
+            background-color: blueviolet;
+            width: 10em;
+            height: 10rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="big">
+        <div class="small">哈哈哈</div>
+    </div>
+    <script>
+        //箭头函数
+        function fun() {
+            return 100
+        }
+        var id = 'GLOBAL';
+        var obj = {
+            id: 'OBJ',
+            a: function () {
+                console.log(this.id);
+            },
+            b: () => {
+                console.log(this.id);
+                console.log(this)
+            }
+        };
+        obj.a(); // 'OBJ'
+        obj.b(); // 'GLOBAL'
+    </script>
+</body>
+
+</html>

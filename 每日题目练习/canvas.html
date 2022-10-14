@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas的学习</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="1000" height="600"></canvas>
+    <script>
+        //首先，找到<canvas>元素
+        const canvas = document.getElementById('canvas')
+        //然后，创建context对象 
+        const ctx = canvas.getContext('2d')
+        // //参数 2d、webgl、webgl2
+        // // ctx.translate(300, 300)
+        // // 画圆线使用arc(中心点X,中心点Y,半径,起始角度,结束角度)
+        // //画大圆
+        // ctx.beginPath()
+        // ctx.arc(0, 0, 100, 0, 2 * Math.PI)
+        // ctx.stroke() // 执行画线段的操作
+        // ctx.closePath()
+        // //画小圆
+        // ctx.beginPath()
+        // ctx.arc(0, 0, 5, 0, 2 * Math.PI)
+        // ctx.stroke() // 执行画线段的操作
+        // ctx.closePath()
+        // // 绘制文字
+        // ctx.font = "50px Arial";
+        // ctx.fillText("Hello World", 10, 0);
+        // // 绘制空心文字
+        // ctx.font = "50px Arial";
+        // ctx.strokeText("Hello World",10,50);
+        // // 画直线
+        // // 定义线条开始坐标
+        // ctx.moveTo(0,0);
+        // // 定义线条结束的坐标 
+        // ctx.lineTo(200,100);
+        // ctx.stroke(); // 执行画线段的操作
+        // //画三角形
+        // ctx.beginPath();
+        // ctx.lineWidth = 10;
+        // //开始坐标
+        // ctx.moveTo(600,50);
+        // //结束坐标
+        // ctx.lineTo(670,150);
+        // ctx.lineTo(530,150);
+        // //可以看到点并没有重合
+        // // ctx.lineTo(600,50);
+        
+        // //使线段闭合
+        // ctx.closePath();
+        // // 执行画线段的操作
+        // ctx.stroke();
+
+        // // 画矩形
+        // ctx.rect(100,100,50,200);
+        // ctx.stroke();
+        // ctx.fill()
+
+        // ctx.fillStyle = "#FF0000";
+        // ctx.fillRect(0, 0, 150, 75);
+
+        //canvas动画
+        ctx.fillStyle = 'green';
+        var x = 50;
+
+        //1、使用setInterval
+        //实现一个矩形的从左向右移动
+        setInterval(function(){
+            //清除画布
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillRect(x,50,50,50);
+            console.log(x,"x1")
+            x+=5;
+            console.log(x,"x2")
+        },1000)
+        // 每秒 50帧 fps
+
+        //2、使用函数加setTimeout()
+        // (function run(){
+        //     ctx.clearRect(0,0,canvas.width,canvas.height);
+        //     ctx.fillRect(x,50,50,50);
+        //     x++;
+        //     // setTimeout(run,1000/50)
+        //     requestAnimationFrame(run)
+        //     // requestAnimationFrame(run)
+        //     // console.log(requestAnimationFrame(run))
+        // })()
+
+        //比较定时器 和 动画函数
+        //动画函数有内置设置好的帧数fps,我们直接调用就可以
+    </script>
+</body>
+
+</html>

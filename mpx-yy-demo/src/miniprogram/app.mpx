@@ -1,0 +1,19 @@
+<script lang="ts" src="./app.ts"></script>
+
+<style>
+  /*此处编写全局样式*/
+</style>
+
+<script name="json">
+  module.exorts = {
+    pages: [
+      './pages/index'
+    ],
+    plugins: {
+      myPlugin: {
+        version: 'dev',
+        provider: __mpx_mode__ === 'ali' ? '{{currentPluginId}}' : ''
+      }
+    }
+  }
+</script>

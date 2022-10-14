@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两栏布局</title>
+    <style>
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        /* div {
+            height: 100%;
+        } */
+        /* 1、利用浮动和margin-left */
+        /* .left{
+            float:left;
+            width: 200px;
+            background-color: violet;
+        }
+        .right{
+            margin-left: 200px;
+            background-color: yellow;
+        } */
+        /* 2、利用float和overflow */
+        /* .left {
+            background: red;
+            float: left;
+        }
+
+        .right {
+            background: blue;
+            overflow: hidden;
+        } */
+        /* 3、利用flex布局 */
+        .top {
+            height: 100%;
+            display: flex;
+        }
+
+        .left {
+            width: 200px;
+            background: tomato;
+        }
+
+        .right {
+            flex: 1;
+            background: gold;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // console.log(typeof(NaN))
+    </script>
+    <div class="top">
+        <div class="left">左侧定宽</div>
+        <div class="right">右侧自适应</div>
+    </div>
+</body>
+
+</html>

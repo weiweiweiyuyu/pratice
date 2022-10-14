@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 为Array实现一个Reader,通过接口getReader获取，Reader 有一个接口 read(n)
+    每次调用会按顺序读区数组的n（默认为1）个元素，调用不会改变数组本身的值，若数组已全部读取完则返回空数组，若传入的参数不为正整数则抛出异常 -->
+    <script>
+        //实现1
+        var count = 0;
+        Array.prototype.getReader = function () {
+            //拿到原数组
+            let that = this;
+            return {
+                read(num) {
+                    //如果有参数，判断参数
+                    if (num) {
+                        try {
+                            if (typeof num == 'string') {
+                                throw Error()
+                            } else if (!(/(^[1-9]\d*$)/.test(num))) {
+                                //正则判断正整数 /^[1-9]\d*$/
+                                throw Error()
+                            } else {
+                                let res = that.slice(count, count + num)
+                                count = count + num;
+                                return res
+                            }
+                        } catch (e) {
+                            return 'Error'
+                        }
+                    } else {
+                        //如果没有参数，默认为1
+                        if (that.length) {
+                            let res = that.slice(count, count + 1)
+                            count = count + 1;
+                            return res
+                        } else {
+                            return []
+                        }
+                    }
+                }
+            }
+        }
+        //实现2
+        Array.prototype.getReader = function () {
+            //不能更改原数组，所以我们先拷贝一下原来的数组，这里使用了深拷贝！！
+            let that = JSON.parse(JSON.stringify(this));
+            return {
+                read(num) {
+                    //如果有参数，判断参数
+                    if (num) {
+                        try {
+                            if (typeof num == 'string') {
+                                throw Error()
+                            } else if (!(/(^[1-9]\d*$)/.test(num))) {
+                                //正则判断正整数 /^[1-9]\d*$/
+                                throw Error()
+                            } else {
+                                let res = that.splice(0, num)
+                                return res
+                            }
+                        } catch (e) {
+                            return 'Error'
+                        }
+                    } else {
+                        //如果没有参数，默认为1
+                        if (that.length) {
+                            let res = that.splice(0, 1)
+                            return res
+                        } else {
+                            return []
+                        }
+                    }
+                }
+            }
+        }
+        //实例
+        const arr = [1, 2, 3, 4, 5, 6]
+        const reader = arr.getReader()
+        console.log(reader.read('1')) // Error
+        console.log(reader.read(-1)) // Error
+        console.log(reader.read(1.5)) // Error
+        console.log(reader.read()) // [1]
+        console.log(reader.read(1)) // [2]
+        console.log(reader.read(2)) // [3,4]
+        console.log(reader.read(3)) // [5,6]
+        console.log(reader.read()) // []
+
+
+        // node :{
+        //     val: 0,
+        //     children:[node1, node2]
+        // }
+
+        function touch(node) {
+            console.log(node.val)
+            for(let i=0;i<node.children.length;i++){
+                touch(node.children[i])
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

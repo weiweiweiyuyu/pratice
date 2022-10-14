@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打印json中所有叶子节点的路径</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .img-background{
+            background-color: rgb(196, 140, 140);
+        }
+        img{
+            /* display: block; */
+            vertical-align:top;
+        }
+        .text{
+            background-color: white;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="img-background">
+        <img src="/img/QQ图片20201015093355.jpg" width="400px" height="400px"/><text class="text">xxx</text>
+    </div>  -->
+    <script>
+        let json_str = {
+            "a": [{
+                    "b": "b1"
+                },
+                {
+                    "c": "c1"
+                }
+            ],
+            "d": {
+                "e": "e1"
+            },
+            "f": "f1"
+        }
+
+        function print(obj) {
+            const res = [];
+            const cycle = function (key, value) {
+                if (!value) {
+                    return
+                }
+                if (typeof value !== 'object') {
+                    if(key[0] === "."){
+                        key = key.slice(1)
+                    }
+                    res.push(`${key}.${value}`)
+                } else {
+                    if (Array.isArray(value)) {
+                        for (let item of value) {
+                            cycle(`${key}.list`,item)
+                        }
+                    }else{
+                        for(let objKey in value){
+                            cycle(`${key}.${objKey}`,value[objKey])
+                        }
+                    }
+                }
+            }
+            cycle('',obj);
+            return res;
+        }
+        console.log(print(json_str))
+    </script>
+</body>
+
+</html>

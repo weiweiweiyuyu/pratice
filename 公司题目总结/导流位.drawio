@@ -1,0 +1,83 @@
+<mxfile host="65bd71144e">
+    <diagram id="D6LaBHIKlCqfGAh5_QBG" name="第 1 页">
+        <mxGraphModel dx="1853" dy="472" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="4" value="点击导流位或者热区" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="2" target="6">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="150" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="开始" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="240" y="30" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;font color=&quot;#ff0000&quot;&gt;x&amp;gt;=2&lt;/font&gt;" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontColor=#000000;fontStyle=1" edge="1" parent="1" source="6">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="x=1" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="6" target="12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="x=0" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="6" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="24小时该页面&lt;br&gt;弹窗展示次数" style="rhombus;whiteSpace=wrap;html=1;rounded=1;sketch=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="247.5" y="140" width="105" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="暂不" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;sketch=1;rounded=1;fontColor=#FF0000;fontStyle=1" edge="1" parent="1" source="12" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="12" target="23">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="上一次的选择" style="rhombus;whiteSpace=wrap;html=1;rounded=1;sketch=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="62.5" y="140" width="105" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="暂不" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.88;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;sketch=1;rounded=1;fontColor=#FF0000;fontStyle=1" edge="1" parent="1" source="14" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="前往" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="14" target="30">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="345.9000000000001" y="466.86" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="24小时该页面&lt;br&gt;弹窗展示次数" style="rhombus;whiteSpace=wrap;html=1;rounded=1;sketch=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="432.5" y="140" width="105" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="不再展示弹窗&lt;br&gt;直接进入M站对应二级页面" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;sketch=1;rounded=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="230" y="300" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="暂不" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontColor=#FF0000;fontStyle=1" edge="1" parent="1" source="23" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="前往" style="edgeStyle=none;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="23" target="30">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="248.16899344560056" y="459.7839058058113" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="展示弹窗" style="rhombus;whiteSpace=wrap;html=1;rounded=1;sketch=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="300" width="110" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="是" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontStyle=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="30" target="34">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="480" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="33" value="否" style="edgeStyle=none;html=1;sketch=1;rounded=1;fontStyle=1" edge="1" parent="1" source="30" target="32">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="是否安装有驾APP" style="rhombus;whiteSpace=wrap;html=1;sketch=1;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="247.5" y="460" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="（传对应中间页参数）&lt;br&gt;跳转至各热区&lt;br&gt;对应的下载中间页" style="whiteSpace=wrap;html=1;sketch=1;rounded=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="242.5" y="590" width="125" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="（传调起APP参数）&lt;br&gt;直接调起APP对应&lt;br&gt;二级页面" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="480" y="470" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

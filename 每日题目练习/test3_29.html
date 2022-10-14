@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三栏布局的实现</title>
+    <style>
+        /* 三栏布局： */
+        /* 一、绝对定位加margin：左右两边设置为绝对定位，中间设置对应方向大小的margin的值 */
+        /* .outer {
+            position: relative;
+            height: 100px;
+        }
+
+        .left {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+
+        .right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100px;
+            background-color: black
+        }
+
+        .center {
+            margin-left: 100px;
+            margin-right: 200px;
+            height: 100px;
+            background-color: coral;
+        } */
+
+        /* 二、flex绝对定位 */
+        /* .outer{
+            display: flex;
+            height: 100px;
+        }
+        .left{
+            width: 200px;
+            background-color: seagreen;
+        }
+        .right{
+            width: 300px;
+            background-color: tomato;
+        }
+        .center{
+            flex:1;
+            background-color: steelblue;
+        } */
+
+        /* 二、圣杯布局 */
+        .outer{
+            /* 形成BFC */
+            overflow: hidden;
+            /* 最外层包含着左中右的元素设置左右的padding来给左右元素留位置 */
+            padding: 0 200px;
+        }
+        .center,.left,.right{
+            /* 会出现.outer因为子元素都浮动的原因而导致塌陷，所以我们需要设置BFC */
+            float: left;
+        }
+        .left,.right{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        .center{
+            /* 设置自适应的宽度 */
+            width: 100%;
+            height: 200px;
+            background-color: yellowgreen;
+        }
+        .left{
+            /* margin用百分比表示的时候，计算依赖的是父元素的宽度！来计算的 */
+            margin-left: -100%;
+            /* left移到outer内的最左边，left移走后，然后right会往左移到left原来的位置 */
+            position: relative;
+            left:-200px;
+        }
+        .right{
+            margin-left: -200px;
+            position: relative;
+            left:200px; 
+        }
+        /* 三、双飞翼布局 */
+
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="center"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+
+</html>

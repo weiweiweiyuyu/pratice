@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <link rel="shortcut icon" href="<%= BASE_URL %>static/favicon.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <script>
+        var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS
+            .supports('top: constant(a)'))
+        document.write(
+            '<meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+            (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+    </script>
+    <link rel="stylesheet" href="<%= BASE_URL %>static/index.<%= VUE_APP_INDEX_CSS_HASH %>.css" />
+    <style type="text/css">
+        /* #ifdef H5 */
+        * {
+            -webkit-text-size-adjust: none;
+        }
+
+        @media only screen and (min-width:700px) {
+            html {
+                font-size: 13px;
+                background-color: #fff;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            body {
+                max-width: 375px;
+                max-height: 667px;
+                background: red;
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                margin: auto;
+                border: solid 1px #e5e5e5;
+            }
+        }
+        /* #endif */
+    </style>
+</head>
+
+
+<body>
+    <noscript>
+        <strong>Please enable JavaScript to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <script>
+        window.onload = function () {
+            document.addEventListener('touchstart', function (event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault()
+                }
+            })
+            document.addEventListener('gesturestart', function (event) {
+                event.preventDefault()
+            })
+        }
+    </script>
+</body>
+
+</html>

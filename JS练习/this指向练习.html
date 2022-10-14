@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this指向问题练习</title>
+</head>
+
+<body>
+    <script>
+        //------------默认绑定--------------
+        // 1、默认绑定，在非严格模式下this指向的是全局对象window,而在严格模式下会绑定到undefiend
+        window.a = 10;
+
+        function foo() {
+            console.log(this.a) //10
+        }
+        window.foo();
+
+        //2、严格模式
+        "use strict";
+        var a = 10;
+
+        function foo() {
+            console.log('this1', this) //this1 undefined
+            console.log(window.a) //10
+            console.log(this.a) //报错Uncaught TypeError: Cannot read property 'a' of undefined
+        }
+        console.log(window.foo) //foo{...}
+        console.log('this2', this) //this2 window
+        foo();
+
+        //3、如果把var改成了let或const，变量是不会被绑定到window上的，所以此时会打印三个undefined
+        let a = 10
+        const b = 20
+
+        function foo() {
+            console.log(this.a) //undefined
+            console.log(this.b) //undefined
+        }
+        foo();
+        console.log(window.a) //undefined
+
+        //4、注意，是this.a，不是a，因此是window下的a
+        var a = 1
+
+        function foo() {
+            var a = 2
+            console.log(this) //window
+            console.log(this.a) //1
+        }
+        foo() //window调用的foo,所以foo()函数内的this指向window
+
+        //5、这里问你的是this.a，而在inner中，this指向的还是window。
+        var a = 1
+
+        function foo() {
+            var a = 2
+
+            function inner() {
+                console.log(this.a) //this的指向仍旧是window 输出1
+            }
+            inner()
+        }
+        foo()
+
+        //------------隐式绑定--------------
+        //6、
+        function foo() {
+            console.log(this.a) //1
+        }
+        var obj = {
+            a: 1,
+            foo
+        }
+        var a = 2
+        obj.foo()
+
+        //7、因为虽然foo2指向的是obj.foo函数，不过调用它的却是window对象，所以它里面this的指向是为window。
+        function foo() {
+            console.log(this.a)
+        };
+        var obj = {
+            a: 1,
+            foo
+        };
+        var a = 2;
+        var foo2 = obj.foo;
+
+        obj.foo(); //1
+        foo2(); //2
+
+        //8、
+        function foo() {
+            console.log(this.a)
+        };
+        var obj = {
+            a: 1,
+            foo
+        };
+        var a = 2;
+        var foo2 = obj.foo;
+        var obj2 = {
+            a: 3,
+            foo2: obj.foo
+        }
+        obj.foo(); //1  this指向obj
+        foo2(); //2 this指向window
+        obj2.foo2(); //3 this指向obj2
+
+        //9、再就是如果你把一个函数当成参数传递时，也会被隐式赋值，发生意想不到的问题。
+        function foo() {
+            console.log(this.a)
+        }
+
+        function doFoo(fn) {
+            console.log(this)
+            fn()
+        }
+        var obj = {
+            a: 1,
+            foo
+        }
+        var a = 2
+        doFoo(obj.foo) //这里我们将obj.foo当成参数传递到doFoo函数中，
+        //在传递的过程中，obj.foo()函数内的this发生了改变，指向了window。
+
+        //10、
+        function foo() {
+            console.log(this.a)
+        }
+
+        function doFoo(fn) {
+            console.log(this)
+            fn()
+        }
+        var obj = {
+            a: 1,
+            foo
+        }
+        var a = 2
+        var obj2 = {
+            a: 3,
+            doFoo
+        }
+        obj2.doFoo(obj.foo)
+        //所以说，如果你把一个函数当成参数传递到另一个函数的时候，也会发生隐式丢失问题
+        //且与包裹着它的函数this指向无关，在非严格模式下，会把该函数的this绑定到window上，严格模式下绑定到undefined.
+
+        //------------显示绑定--------------
+        //  通过call()、apply()或者bind()方法直接指定this的绑定对象, 如foo.call(obj)。
+        //  使用.call()或者.apply()的函数是会直接执行的
+        //  bind()是创建一个新的函数，需要手动调用才会执行
+        //  .call()和.apply()用法基本类似，不过call接收若干个参数，而apply接收的是一个数组
+
+        //11、
+        function foo() {
+            console.log(this.a)
+        }
+        var obj = {
+            a: 1
+        }
+        var a = 2
+
+        foo() //2
+        foo.call(obj) //1
+        foo.apply(obj) //1
+        foo.bind(obj) //不会执行，需要调用，foo.bind(obj)();
+        //如果call、apply、bind接收到的第一个参数是空或者null undefined的话，则会忽略这个参数。
+
+        //12、
+        var obj1 = {
+            a: 1
+        }
+        var obj2 = {
+            a: 2,
+            foo1: function () {
+                console.log(this.a)
+            },
+            foo2: function () {
+                //对于setTimeout中的函数，这里存在隐式绑定的隐式丢失，也就是当我们将函数作为参数传递时会被隐式赋值，
+                //回调函数丢失this 绑定，因此这时候setTimeout中的函数内的this是指向window
+                setTimeout(function () {
+                    console.log(this)
+                    console.log(this.a)
+                }, 0)
+            }
+        }
+        var a = 3
+        obj2.foo1() //2
+        obj2.foo2() //window{...}  3
+
+        //13、面对上面👆这种情况我们就可以使用call、apply 或者bind来改变函数中this的指向，
+        //使它绑定到obj1上，从而打印出1。
+        var obj1 = {
+            a: 1
+        }
+        var obj2 = {
+            a: 2,
+            foo1: function () {
+                console.log(this.a)
+            },
+            foo2: function () {
+                setTimeout(function () {
+                    console.log(this)
+                    console.log(this.a)
+                }.call(obj1), 0)
+            }
+        }
+        //obj2.foo2.call(obj1)
+        //如果这种写法的话，我改变的就是foo2函数内的this指向了，但是我们知道，
+        //foo2函数内this的指向和setTimeout里函数的this是没有关系的，因为调用定时器的始终是window
+        var a = 3
+        obj2.foo1() //2
+        obj2.foo2() //{a:1} 1
+
+        //14、
+        function foo() {
+            console.log(this.a)
+        }
+        var obj = {
+            a: 1
+        }
+        var a = 2
+
+        foo() //2
+        foo.call(obj) //1
+        foo().call(obj) // 2  但是会对foo()函数的返回值执行.call(obj)操作，
+        //可是我们可以看到foo()函数的返回值是undefined，因此就会报错了。
+        //所以我们可以看到 foo.call() 和 foo().call()的区别了，一个针对于函数一个针对于函数的返回值。
+
+        //15、继续了解
+        //既然刚刚14是因为函数没有返回值才报的错，那我现在给它加上返回值看看：
+        function foo() {
+            console.log(this.a)
+            return function () {
+                console.log(this.a)
+            }
+        }
+        var obj = {
+            a: 1
+        }
+        var a = 2
+
+        foo() //2
+        foo.call(obj) //1
+        foo().call(obj) //2  1
+        //call——》在执行完foo()之后，会返回一个匿名函数，
+        //并且后面使用了.call(obj)来改变这个匿名函数的this指向并调用了它，所以输出了1。
+
+        //16、call换成bind会怎么样呢？
+        function foo() {
+            console.log(this.a)
+            return function () {
+                console.log(this.a)
+            }
+        }
+        var obj = {
+            a: 1
+        }
+        var a = 2
+
+        foo() //2
+        foo.bind(obj) //不会执行
+        foo().bind(obj) //2 
+
+        //17、
+        function foo() {
+            console.log(this.a) //1
+            return function () {
+                console.log(this.a) //2
+            }
+        }
+        var obj = {
+            a: 1
+        }
+        var a = 2
+        foo.call(obj)()
+
+        //18、一直都在做函数返回函数的题目，让我们来看看把它们加到对象里，会有哪些有趣的题目吧。
+        var obj = {
+            a: 'obj',
+            foo: function () {
+                console.log('foo:', this.a)
+                return function () {
+                    console.log('inner:', this.a)
+                }
+            }
+        }
+        var a = 'window'
+        var obj2 = {
+            a: 'obj2'
+        }
+        obj.foo()() // 'foo:'obj  'inner:'window
+        obj.foo.call(obj2)() //'foo:'obj2 'inner:'window
+        obj.foo().call(obj2) //'foo:'obj  'inner:''obj2'
+
+        //19、一直做这种题目是不是没意思，让我们加几个参数来玩玩。
+        var obj = {
+            a: 1,
+            foo: function (b) {
+                b = b || this.a
+                // 等价于 b ? b : this.a 如果b的值大于0或为true,那么就把b的值赋给b,否则就把this.a赋值给b
+                return function (c) {
+                    console.log(this.a + b + c)
+                }
+            }
+        }
+        var a = 2
+        var obj2 = {
+            a: 3
+        }
+        obj.foo(a).call(obj2, 1) //6
+        //开始调用obj.foo(a)将2传入foo函数并赋值给形参b,并且由于闭包的原因，使得匿名函数内能访问到b,之后调用匿名函数的时候
+        //用call()改变了this的指向，使得匿名函数的this指向obj2,这时this.a为3，然后c为传入的参数1
+        //所以3+2+1=6 
+        obj.foo.call(obj2)(1) //obj.foo.call(obj2) 首先是使用call改变了foo的函数的指向，指向了obj2,
+        //又因为此时并没有传参，b = b || this.a  b = this.a = 3 然后又调用匿名函数，只传了一个1，此时this指向为window
+        //所以this.a = 2, c = 1;所以 2+3+1 = 6！！！
+
+
+        // ----------箭头函数绑定--------------
+        //对于箭头函数，它里面的this是由外层作用域来决定的，且指向函数定义时的this,而非执行时
+        //进一步来说，箭头函数中没有this绑定，必须通过查找作用域链来决定其值，如果箭头函数被非箭头函数包含
+        //则this绑定的是最近一层非箭头函数的this,否则，this为undefined
+        //20、
+        var obj = {
+            name: 'obj',
+            foo1: () => {
+                console.log(this.name)
+            },
+            foo2: function () {
+                console.log(this.name)
+                return () => {
+                    console.log(this.name)
+                }
+            }
+        }
+        var name = 'window'
+        obj.foo1() //'window'
+        obj.foo2()() // obj obj!!!
+        //而返回的匿名函数是一个箭头函数，它的this由外层作用域决定，那也就是函数foo2咯，
+        //那也就是它的this会和foo2函数里的this一样，就也打印出了obj。
+
+        //21、
+        var name = 'window'
+        var obj1 = {
+            name: 'obj1',
+            foo: function () {
+                console.log(this.name)
+            }
+        }
+        var obj2 = {
+            name: 'obj2',
+            foo: () => {
+                console.log(this.name)
+            }
+        }
+        obj1.foo() // 'obj1'
+        obj2.foo() // 'window'
+
+        //22、如果用普通函数和箭头函数来做一层嵌套关系的话，
+        //一共有四种情况，让我们把每种情况都考虑一遍 😁：
+        var name = 'window'
+        var obj1 = {
+            name: 'obj1',
+            foo: function () {
+                console.log(this.name) //obj1
+                return function () {
+                    console.log(this.name) //window
+                }
+            }
+        }
+        var obj2 = {
+            name: 'obj2',
+            foo: function () {
+                console.log(this.name) //obj2
+                return () => {
+                    console.log(this.name) //obj2
+                }
+            }
+        }
+        var obj3 = {
+            name: 'obj3',
+            foo: () => {
+                console.log(this.name) //window
+                return function () {
+                    console.log(this.name) //window
+                }
+            }
+        }
+        var obj4 = {
+            name: 'obj4',
+            foo: () => {
+                console.log(this.name) //window
+                return () => {
+                    console.log(this.name) //window
+                }
+            }
+        }
+
+        obj1.foo()()
+        obj2.foo()()
+        obj3.foo()()
+        obj4.foo()()
+
+        //23、构造函数对象中普通函数和箭头函数的区别：一层函数的题目
+        var name = 'window'
+
+        function Person(name) {
+            this.name = name
+            this.foo1 = function () {
+                console.log(this.name)
+            }
+            this.foo2 = () => {
+                console.log(this.name)
+            }
+        }
+        var person2 = {
+            name: 'person2',
+            foo2: () => {
+                console.log(this.name)
+            }
+        }
+        var person1 = new Person('person1')
+        person1.foo1() //'person1' person1.foo1()是个普通函数，this由最后调用它的对象决定，即person1
+        //person1.foo2()为箭头函数，this由外层作用域决定，且指向函数定义时的this而非执行时，
+        //在这里它的外层作用域是函数Person，且这个是构造函数，并且使用了new来生成了对象person1，所以此时this的指向是为person1。
+        person1.foo2() //'person1'
+        //
+        person2.foo2() //'window'
+
+        //24、构造函数对象中普通函数和箭头函数的区别：
+        //函数嵌套题目
+        var name = 'window'
+
+        function Person(name) {
+            this.name = name
+            this.foo1 = function () {
+                console.log(this.name) // 'person1'
+                return function () {
+                    console.log(this.name) //'window'
+                }
+            }
+            this.foo2 = function () {
+                console.log(this.name) //'person1'
+                return () => {
+                    console.log(this.name) //'person1'
+                }
+            }
+            this.foo3 = () => {
+                console.log(this.name) //'person1'
+                return function () {
+                    console.log(this.name) //'window'
+                }
+            }
+            this.foo4 = () => {
+                console.log(this.name) //'person1'
+                return () => {
+                    console.log(this.name) //'person1'
+                }
+            }
+        }
+        var person1 = new Person('person1')
+        person1.foo1()()
+        person1.foo2()()
+        person1.foo3()()
+        person1.foo4()()
+
+        //  总结箭头函数注意点：1、它里面的this是由外层作用域来决定的，且指向函数定义是的this而非执行时
+        // 2、字面量创建的对象，作用域是window,如果里面有箭头函数属性的话，this指向的是window
+        // 3、构造函数创建的对象，作用域是可以理解为是这个构造函数，且这个构造函数的this是指向新建的对象的，因此this指向这个对象
+        // 4、箭头函数的this是无法通过bind、call、apply来直接修改，但是可以通过改变作用域中this的指向来间接修改。
+
+        //25、综合题练习
+        var name = 'window'
+        var person1 = {
+            name: 'person1',
+            foo1: function () {
+                console.log(this.name)
+            },
+            foo2: () => console.log(this.name),
+            foo3: function () {
+                return function () {
+                    console.log(this.name)
+                }
+            },
+            foo4: function () {
+                return () => {
+                    console.log(this.name)
+                }
+            }
+        }
+        var person2 = {
+            name: 'person2'
+        }
+
+        person1.foo1()  //'person1' 
+        person1.foo1.call(person2) //'person2'
+
+        person1.foo2() //'window'
+        person1.foo2.call(person2) //'window'
+
+        person1.foo3()()  //'window'
+        person1.foo3.call(person2)() //'window'
+        person1.foo3().call(person2) //'person2'
+
+        person1.foo4()()  //'person1'
+        person1.foo4.call(person2)() //'person2'
+        person1.foo4().call(person2) //'person1'
+    </script>
+</body>
+
+</html>

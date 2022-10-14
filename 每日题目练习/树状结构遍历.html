@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树状结构遍历</title>
+</head>
+
+<body>
+    <script>
+        let tree = [{
+                val: 1,
+                children: [{
+                        val: 2,
+                        children: null
+
+                    },
+                    {
+                        val: 3,
+                        children: [{
+                            val: 4,
+                            children: null
+                        }]
+                    },
+                    {
+                        val: 5,
+                        children: null
+                    }
+                ]
+            },
+            {
+                val: 6,
+                children: [{
+                    val: 7,
+                    children: null
+                }]
+            }
+        ]
+        /**
+         * @param tree Array 传入的结构，是一个数据
+         * @return Number[] 返回一个数组
+         */
+        //递归方法
+        function travelTree(arr,result) {
+            result = result || [];
+            for(let i = 0;i < arr.length;i++){
+                if(arr[i].children){
+                    result.push(arr[i].val)
+                    travelTree(arr[i].children,result)
+                }else{
+                    result.push(arr[i].val)
+                }
+            }
+            return result;
+        }
+        //非递归
+        function travelTree1(arr) {
+            const result = [];
+            const stack = [];
+            for (item of tree) {
+                stack.push(item);
+                while (stack.length) {
+                    //shift方法是把数组的第一个元素从其中删除，并返回第一个元素,出栈
+                    let treeItem = stack.shift();
+                    result.push(treeItem.val)
+                    if (treeItem.children) {
+                        //入栈
+                        stack.unshift(...treeItem.children)
+                    }
+                }
+            }
+            return result;
+        }
+
+        // function flat(arr) {
+        //     const result = [];
+        //     const stack = [];
+        //     //如果栈不为空，则循环遍历
+        //     for (item of arr) {
+        //         stack.push(item)
+        //         while (stack.length !== 0) {
+        //             const sta = stack.shift();
+        //             result.push(item.val)
+        //             if (sta.children) {
+        //                 //如果是数组再次入栈，并且展开一层
+        //                 stack.push(...item.children);
+        //             }
+        //         }
+        //     }
+        //     return result;
+        // }
+
+
+
+        // const stack = [].concat(arr);
+        // while(stack.length !== 0){
+        //     const val = stack.pop();
+        //     console.log(val,"val");
+        //     if(val.children){
+        //         stack.push(...val.children);
+        //     }else{
+        //         result.unshift(val)
+        //     }
+        // }
+
+        console.log(travelTree1(tree))
+    </script>
+</body>
+
+</html>

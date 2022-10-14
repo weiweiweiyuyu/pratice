@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async/await</title>
+</head>
+
+<body>
+    <script>
+        // 1、async 表示函数里有异步操作，await表示紧跟在后面的表达式需要等待结果
+        async function asyncFn() {
+            return 'hello world'
+        }
+        // console.log(asyncFn()); //Promise {<fulfilled>: 'hello world'}
+
+        //2、async定义[异步函数]
+        async function asyncFn1() {
+            return '我后执行';
+        }
+        asyncFn1().then(result => {
+            console.log(result)
+        })
+        console.log("我先执行")
+
+        //3、async定义的函数内部默认返回一个[promise对象]，如果函数
+        // 内部抛出异常或者是返回reject，都会使函数的promise的状态为失败reject
+        async function e() {
+            throw new Error("has error");
+        }
+        e().then(success => console.log("成功", success))
+            .catch(error => console.log("失败", error))
+
+        //4、async函数接收到返回的值，发现不是异常或者reject,则判定成功，这里可以return 各种类型的值
+        // false、NaN、undefined...总之都是resolve
+        async function throwStatus() {
+            return '可以返回所有类型的值'
+        }
+        throwStatus().then(success => console.log('成功', success))
+            .catch(error => console.log('失败', error));
+
+        // 5、返回如下结果会使async函数判定失败
+        //(1)内部含有直接使用并且未声明的变量或者函数。
+        //(2)内部抛出一个错误throw new Error或者返回reject状态return Promise.reject('执行失败')
+        //(3)函数方法执行出错（🌰：Object使用push()）等等...
+        async function throwError() {
+            return Promise.reject("执行失败")
+            // return Promise.resolve("hahah成功")
+        }
+        throwError().then(success => console.log('成功', success))
+            .catch(error => console.log('失败', error));
+
+        async function throwError2() {
+            //未声明
+            return msg;
+
+        }
+        throwError2().then(success => console.log('成功', success))
+            .catch(error => console.log('失败', error));
+
+        //6、在async里，必须要将结果return 回来，不然的话不管是执行reject还是resolve的值都为undefined
+        async function PromiseError() {
+            return Promise.reject('has Promise Error'); 
+            // Promise.reject('这是错误的做法');
+        }
+
+        PromiseError().then(success => console.log('成功', success)) //成功 undefined
+            .catch(error => console.log('失败', error));
+    </script>
+
+</body>
+
+</html>

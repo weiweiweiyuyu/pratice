@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="test">test</button>
+    <script>
+        // for (let i = 0; i < 10; i++) {
+        //     (function () {
+        //         console.log(i+"iii")
+        //         setTimeout(() => {
+        //             console.log(i)
+        //         }, 1000)
+        //     })()
+        // }
+        window.id = "window";
+        // document.querySelector('#test').onclick = function () {
+        //     console.log(this.id); //test
+        //     var fun = function () {
+        //         console.log(this,"this")
+        //         console.log(this.id);
+        //     }
+
+        //     // var fun = () => {
+        //     //     console.log(this,"this")
+        //     //     console.log(this.id);
+        //     // }
+        //     fun(); //window
+        // }
+        //绑定事件，内部函数
+        //普通函数的调用，函数内部this指向的都是window
+        var o = document.querySelector('#test');
+        o.onclick = function () {
+            console.log(this, "this111")
+            console.log(this.id); //test
+            var fun = function () {
+                console.log(this, "this222")
+                console.log(this.id);
+            }
+            fun(); //window
+        }
+        //外部函数
+        var fn = function () {
+            console.log(this, "thisfn")
+            console.log(this.id);
+        }
+        fn();
+    </script>
+</body>
+
+</html>

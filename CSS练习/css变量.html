@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS变量</title>
+    <style>
+        body {
+            --foo: #eeeb4b;
+            --bar: #e6231c;
+            --texta: 30px;
+            --textb: var(--bar)' world';
+            --textc: 40;
+        }
+
+        /* div {
+            background-color: var(--foo);
+        } */
+
+        .big {
+            color: var(--bar);
+            /* font-size: var(--texta); */
+            /* 如果这个变量是个数值，没有单位的话不嫩直接加px,要通过calc函数进行一个连接操作 */
+            font-size: var(--textc)px;
+            font-size: calc(var(--textc)*1px);
+        }
+
+        :root {
+            --color: blue;
+        }
+
+        div {
+            --color: green;
+        }
+
+        #alert {
+            --color: red;
+        }
+
+        * {
+            color: var(--color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>
+        <p class="big">哈哈哈哈哈哈哈哈哈哈</p>
+    </div> -->
+    <p>蓝色</p>
+    <div>绿色</div>
+    <div id="alert">红色</div>
+    <!-- <span>学习学习</span> -->
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body{
+            height: 100%;
+        }
+        #container{
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+        #header{
+            height: 100px;
+            background-color: aquamarine;
+        }
+        #content{
+            flex: 1;
+            background-color: burlywood;
+        }
+        #footer{
+            height: 120px;
+            background-color: brown;
+        }
+        .box{
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header"></div>
+        <div id="content">
+            <div class="box"></div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>

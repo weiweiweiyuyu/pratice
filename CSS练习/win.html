@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* p {
+            background: #000;
+        }
+        #box p{background:#001}
+        #tag{background:#002}
+        .box .tag{background:#003}
+        div #tag{background:#004}
+        .box p{background:#005} */
+        .cont {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .header {
+            height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="box" class="box"><p id="tag" class="tag"></p></div> -->
+    <!-- <div class="cont">
+        <div class="sidebar">sidebar</div>
+        <div class="content">
+            <div class="header">
+                <div class="avatar"></div>
+                <div class="name">user</div>
+                <div class="quit">quit</div>
+            </div>
+            <div class="body"></div>
+        </div>
+    </div> -->
+    <ul>
+        <li>text1</li>
+        <li>text2</li>
+    </ul>
+    <script>
+        var lis = document.querySelectorAll("li");
+        console.log(lis,"lis")
+        lis.forEach(function (li, i) {
+            li.addEventListener("click", function (e) {
+                console.log(lis[i].innerText);
+            })
+        })
+    </script>
+</body>
+
+</html>

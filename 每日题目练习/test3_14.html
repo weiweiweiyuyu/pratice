@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #big {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            width: 600px;
+            height: 300px;
+            background-color: blueviolet;
+        }
+
+        .small {
+            background-color: brown;
+            width: 200px;
+            height: 100px;
+            /* margin: 0 10px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="big">
+        <div class="small">1</div>
+        <div class="small">2</div>
+        <div class="small">3</div>
+        <div class="small">4</div>
+        <div class="small">5</div>
+        <div class="small">6</div>
+        <div class="small">7</div>
+        <div class="small">8</div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     console.log('setTimeout');
+        // })
+
+        // new Promise(function (resolve) {
+        //     console.log('promise');
+        //     resolve("hhh")
+        // }).then(function (data) {
+        //     console.log("then")
+        //     console.log(data);
+        // })
+
+        // console.log('console');
+        console.log('1');
+
+        setTimeout(function () {
+            console.log('2');
+            process.nextTick(function () {
+                console.log('3');
+            })
+            new Promise(function (resolve) {
+                console.log('4');
+                resolve();
+            }).then(function () {
+                console.log('5')
+            })
+        })
+        process.nextTick(function () {
+            console.log('6');
+        })
+        new Promise(function (resolve) {
+            console.log('7');
+            resolve();
+        }).then(function () { 
+            console.log('8')  
+        })
+
+        setTimeout(function () {
+            console.log('9');
+            process.nextTick(function () {
+                console.log('10');
+            })
+            new Promise(function (resolve) {
+                console.log('11');
+                resolve();
+            }).then(function () {
+                console.log('12')
+            })
+        })
+    </script>
+</body>
+
+</html>

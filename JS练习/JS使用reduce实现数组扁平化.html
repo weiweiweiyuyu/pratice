@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组扁平化</title>
+</head>
+
+<body>
+    <script>
+        let arr = [1, 2, 3, [4, 5, 6]]
+        // 使用reduce
+// 进阶一：二维
+        let newArr = arr.reduce((prev, cur) => {
+            return prev.concat(cur)
+        }, [])
+// 进阶二：多维
+        function fn(arr) {
+            return arr.reduce((prev, cur) => {
+                return prev.concat(Array.isArray(cur) ? fn(cur) : cur)
+            }, [])
+        }
+        console.log(fn(arr))
+//  进阶三：考虑通过传入整数参数控制“拉平”层数 num 来控制
+        function fn2(arr,num = 1){
+            return num > 0 
+            ? arr.reduce((pre,cur)=>{
+                return pre.concat(Array.isArray(cur) ? fn2(cur,num - 1) : cur)
+            },[])
+            :arr.slice();
+        }
+//使用栈
+        // 栈思想
+        function flat(arr) {
+            const result = [];
+            const stack = [].concat(arr); // 将数组元素拷贝至栈，直接赋值会改变原数组
+            //如果栈不为空，则循环遍历
+            while (stack.length !== 0) {
+                const val = stack.pop();
+                if (Array.isArray(val)) {
+                    stack.push(...val); //如果是数组再次入栈，并且展开了一层
+                } else {
+                    result.unshift(val); //如果不是数组就将其取出来放入结果数组中
+                }
+            }
+            return result;
+        }
+        const arr1 = [1, 2, 3, 4, [1, 2, 3, [1, 2, 3, [1, 2, 3]]], 5, "string", {
+            name: "弹铁蛋同学"
+        }]
+        flat(arr1)
+    </script>
+</body>
+
+</html>

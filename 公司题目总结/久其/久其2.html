@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2、函数实现</title>
+    <style>
+        #container {
+            width: 500px;
+            height: 500px;
+            position: relative;
+        }
+
+        .point {
+            position: absolute;
+            /* width: 1px;
+            height: 1px; */
+            z-index: 1;
+        }
+
+        #point-move {
+            color: black;
+            width: 1px;
+            height: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="point-move">move</div>
+    </div>
+    <!-- 1.	实现随机位置函数，调用该函数后，使得50个div.point 的位置发生变化，要求
+        1.1 div.point不重叠，
+        1.2 且两两之间至少存在16px的距离
+    -->
+    <script>
+        init(); //入口函数
+        function init() {
+            randomDiv();
+        }
+        //设置随机位置
+        var arr = [];
+        function randomPosition2(){
+            for(let i = 0;i < 50;i++){
+                //clientWidth网页可见区域宽度 clientHeight网页可见区域高度
+                var left = Math.random() * document.documentElement.clientWidth;
+                var top = Math.random() * document.documentElement.clientHeight;
+                var obj = {
+                    left:left,
+                    top:top
+                }
+                if(i > 0){
+                    if(Math.abs(arr[i].left - arr[i-1].left) < 16){
+                        //新点在上一个点左边
+                        if(arr[i].left < arr[i-1].left){
+                            obj.left = obj.left - (16 - Math.abs(arr[i].left - arr[i-1].left))
+                        }else{
+                            obj.left = obj.left + (16 - Math.abs(arr[i].left - arr[i-1].left))
+                        }
+                        
+                    }
+                    if(Math.abs(arr[i].top - arr[i-1].top) < 16){
+                        if(arr[i].top > arr[i-1].top){
+                            obj.top = obj.top + (16 - Math.abs(arr[i].top - arr[i-1].top))
+                        }else{
+                            obj.top = obj.top - (16 - Math.abs(arr[i].top - arr[i-1].top))
+                        }
+                    }
+                }
+                arr.push(obj);
+            }
+            // return arr; 
+        }
+        //设置元素
+        function addPoint(){
+            for(let i = 0;i < 50;i++){
+                var point = document.createElement('div');
+                cloneObj(point.style, {
+                    left: arr[i].left,
+                    top: arr[i].top,
+                })
+                var parent = document.getElementById("container");
+                parent.appendChild(point);
+            }
+        }
+
+        //设置随机div
+        function randomDiv() {
+            for (var i = 1; i < 51; i++) { //为定义的各个div块一一设置属性
+                var divs = document.getElementsByClassName("point");
+                var point = randomPosition();
+                console.log(divs)
+                console.log(divs[i], divs[i].style.top, "111")
+                cloneObj(divs[i].style, {
+                    left: point.left,
+                    top: point.top,
+                    margin: point.margin,
+                    backgroundColor: divColor()
+                })
+            }
+        }
+        //复制对象属性
+        function cloneObj(target, source) {
+            for (var key in source) {
+                target[key] = source[key];
+            }
+        }
+        //获取随机位置
+        function randomPosition(elemWidth, elemHeight) {
+            var left = Math.random() * document.documentElement.clientWidth + "px";
+            var top = Math.random() * document.documentElement.clientHeight + "px";
+            var margin = "16px";
+            return {
+                left: left,
+                top: top,
+                margin: margin,
+            };
+        }
+
+        function divColor() {
+            var col = "#"; //这个字符串第一位为# 颜色的格式
+            for (var i = 0; i < 6; i++) {
+                col += parseInt(Math.random() * 16).toString(16);
+            }
+            return col;
+        }
+        // 2.实现动画函数，调用该函数后，
+        // 2.1.	先从div.point中随机选择一个初始点，并将div.point-move移动至该点
+        // 2.2.	从剩下的点中随机选择一个点，在1.5s内直线移动到该点
+        // 2.3.	重复步骤2.2，直到所有的点均完成。
+        var count = 0;
+        function getPointPosition() {
+            //拿到50个点的dom节点数组
+            var divs = document.getElementsByClassName("point");
+            //随机取[0,50]中间的一个数字,作为初始点
+            var randomNum = Math.random() * 51;
+            //将div.point-move移动至该点
+            var pointMove = document.getElementById("point-move");
+            cloneObj(pointMove.style, {
+                left: getComputedStyle(divs[randomNum]).left,
+                top: getComputedStyle(divs[randomNum]).top,
+            })
+            // 从剩下的点中随机选择一个点
+            var randomNum2 = Math.random() * 51;
+            if (randomNum2 != randomNum) {
+                removeBox(divs[randomNum2], pointMove)
+            }
+        }
+        //实现在1.5s内直线移动到该点
+        function removeBox(item, targetItem) {
+            count++;
+            var x = getComputedStyle(divs[randomNum2]).left;
+            var y = getComputedStyle(divs[randomNum2]).top;
+            var targetLeft = getComputedStyle(targetItem).left;
+            var targetTop = getComputedStyle(targetItem).top;
+            var tx = targetLeft - x,
+                ty = targetTop - y,
+                dist = Math.sqrt(tx * tx + ty * ty)
+            // 另一种实现方式可以通过对x,y轴坐标的加减来移动。
+            //x++ x--
+            //y++ y--
+            //dist为直线距离
+            var ctx = document.getElementByID("canvas").getContext("2d"),
+                velX = 0,
+                velY = 0,
+                thrust = 1;
+            function draw() {
+                var angle = rad / Math.PI * 180;;
+                velX = (tx / dist) * thrust;
+                velY = (ty / dist) * thrust;
+                if (dist > 1) {
+                    x += velX;
+                    y += velY;
+                }
+
+                ctx.fillStyle = "#ff0";
+                ctx.beginPath();
+                ctx.rect(targetLeft, targetTop, 1);
+                ctx.closePath();
+                ctx.fill();
+
+                setTimeout(function () {
+                    draw()
+                }, 1500);
+            }
+            draw();
+        }
+        while(count < 50){
+            getPointPosition();
+            removeBox();
+        }
+    </script>
+</body>
+
+</html>

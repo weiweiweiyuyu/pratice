@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>节流</title>
+</head>
+
+<body>
+    <button>按钮<button>
+    <script>
+        let btn = document.querySelector("button")
+        function con() {
+            console.log(123)
+        }
+        btn.onclick = throttle(con,2000)
+        //节流函数：一段时间内只执行第一次
+        function throttle(fn, delay) {
+            let flag = true;
+            return function () {
+                if (flag) {
+                    setTimeout(() => {
+                        fn.call(this)
+                        flag = true
+                    }, delay)
+                }
+                flag = false
+            }
+        }
+    </script>
+</body>
+<html>
+    <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>节流</title>
+	</head>
+	<body>
+		<button onclick="zhixing()">按钮<button>
+		<script>
+			function con(){
+				console.log(123)
+			}
+			function throttle(fn,delay){
+				let flag = true
+				return function(){
+					if(!flag){
+						return;
+					}
+					flag = false
+					setTimeout(() => {
+						fn.call(this)
+						flag = true
+					},delay)
+					
+				}
+			}
+			function zhixing(){
+				console.log('zhixing')
+				throttle(con,2000)()
+			}
+		</script>
+	</body>
+<ml>

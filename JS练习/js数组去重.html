@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组去重</title>
+</head>
+
+<body>
+    <script>
+        let arr = [1,2,3,3,3,4,5,5]
+        //过滤器
+        const unique = arr => arr.filter((e, i) => arr.indexOf(e) === i);
+        console.log(arr.filter((e, i) => arr.indexOf(e) === i),"unique")
+
+        //排序
+        // 通过比较相邻数字是否重复，将排序后的数组进行去重。
+        const unique2 = (array) => {
+            array.sort((a, b) => a - b);
+            let pre = 0;
+            const result = [];
+            for (let i = 0; i < array.length; i++) {
+                if (!i || array[i] != array[pre]) {
+                    result.push(array[i]);
+                }
+                pre = i;
+            }
+            return result;
+        }
+
+        //使用set
+        console.log(Array.from(new Set(arr)),"Array.from(new Set(arr))")
+        console.log([...new Set(arr)],"[...new Set(arr)]")
+    </script>
+</body>
+
+</html>

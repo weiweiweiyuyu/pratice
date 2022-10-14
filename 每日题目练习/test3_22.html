@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>li 与 li 之间有看不见的空白间隔</title>
+    <style>
+        li {
+            list-style: none;
+        }
+
+        div {
+            width: 0;
+            height: 0;
+            border-top: 50px solid red;
+            border-right: 50px solid transparent;
+            border-left: 50px solid transparent;
+        }
+
+        /* div {
+            width: 0;
+            height: 0;
+            border: 100px solid;
+            border-color: orange blue red green;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- 1、验证li标签的空隙 -->
+    <ul>
+        <li>hahah</li>
+        <li>hahah</li>
+        <li>hahah</li>
+    </ul>
+    <!-- 2、实现三角形 -->
+    <div></div>
+
+</body>
+
+</html>

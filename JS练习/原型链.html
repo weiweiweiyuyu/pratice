@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链</title>
+</head>
+
+<body>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        const person1 = new Person('星星', 23)
+        const person2 = new Person('wy', 21)
+    //1、实例对象的隐式原型=构造函数的显示原型
+        console.log(person1.__proto__ === Person.prototype) //true
+        //
+        Person.prototype.sayName = function () {
+            console.log(this.name)
+        }
+        console.log(Person.prototype, "Person.prototype")
+        console.log(person1.__proto__, "person1.__proto__")
+    //2、上面提到的构造函数，其实咱们平时定义函数无非以下几种
+        function fn1(name, age) {
+            console.log(`我是${name}, 我今年${age}岁`)
+        }
+        fn1('星星', 10) // 我是星星, 我今年10岁
+        //函数定义
+        const fn2 = function (name, age) {
+            console.log(`我是${name}, 我今年${age}岁`)
+        }
+        fn2('星星', 10) // 我是星星, 我今年10岁
+        //箭头函数
+        const arrowFn = (name, age) => {
+            console.log(`我是${name}, 我今年${age}岁`)
+        }
+        arrowFn('星星', 10) // 我是星星, 我今年10岁
+    //3、其实这几种的本质都是一样的(只考虑函数的声明)，都可以使用new Function来声明
+        const fn1 = new Function('name','age','console.log(`我是${name},我今年${age}岁`)')
+        fn1("wy",21)
+    </script>
+</body>
+
+</html>

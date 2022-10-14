@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a1 = [1, 5, 10, 25, 9, 17, 100] // true
+        var a2 = [2, 99, 3, 5] // true
+        var a3 = [1, 0, 0, 5] // false
+        var a4 = [1, 0, 10, 25, 17, 100] // false
+        let num = 0;
+
+        function count(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (j != i) {
+                        num = arr[i] + arr[j];
+                        if (arr.includes(num) && arr.indexOf(num) != i && arr.indexOf(num) != j) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        console.log(count(a1))
+        console.log(count(a2))
+        console.log(count(a3))
+        console.log(count(a4))
+
+        //使用map来代替数组里面是否包含元素api以及下标是否满足不同
+        function count2(arr) {
+            var map = new Map();
+            for (item of arr) {
+                // if (map.has(arr[i])) {
+                //     map.set(arr[i], map.get(arr[i]) + 1)
+                // } else {
+                //     map.set(arr[i], 1)
+                // }
+                let size = map.get(item) || 0;
+                map.set(item, ++size)
+            }
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i + 1; j < arr.length; j++) {
+                    num = arr[i] + arr[j];
+                    //加数有几个0,要考虑加数有0的个数！！！
+                    let zero = 0;
+                    if (arr[i] == 0) {
+                        zero++;
+                    }
+                    if (arr[j] == 0) {
+                        zero++;
+                    }
+                    if (map.has(num) && map.get(num) > zero) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        var a1 = [1, 5, 10, 25, 9, 17, 100]
+        var a2 = [2, 99, 3, 5]
+        var a3 = [1, 0, 0]
+        var a4 = [1, 0, 10, 25, 17, 100]
+        console.log(count2(a1))
+        console.log(count2(a2))
+        console.log(count2(a3))
+    </script>
+</body>
+
+</html>
